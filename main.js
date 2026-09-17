@@ -105,3 +105,61 @@ servicesButtons.forEach (button => {
     }
   });
 });
+
+// TESTIMONIALS ANIMATION OF DUPLICATE CARDS
+// Duplicate images to make the animation work
+
+const tracks = document.querySelectorAll(".testimonials-content");
+
+tracks.forEach(track => {
+  const cards = [...track.children];
+
+  // Duplicate cards only once
+  for (const card of cards) {
+    track.appendChild(card.cloneNode(true));
+  }
+});
+
+// COPY EMAIL IN CONTACT
+const copyBtn = document.getElementById("contact-btn");
+const copyEmail = document.getElementById("contact-email").textContent;
+
+copyBtn.addEventListener("click", () => {
+  // Using the clipboard API to copy text
+  navigator.clipboard.writeText(copyEmail).then(() => {
+    copyBtn.innerHTML = 'Email copied <i class="ri-check-line"></i>';
+
+    // Restore Original Text
+    setTimeout(() => {
+      copyBtn.innerHTML = 'Copy email <i class="ri-file-copy-line"></i>';
+    }, 2000);
+  });
+});
+
+// CURRENT YEAR AT THE FOOTER
+const textYear = document.getElementById("footer-year");
+let currentYear = new Date().getFullYear();
+
+// Updates the current year each year
+textYear.textContent = currentYear;
+
+// SCROLL SECTIONS ACTIVE LINK
+const sections = document.querySelectorAll("section[id]");
+
+const scrollActive = () => {
+  // We get the position by scrolling down
+  const scrollY = window.scrollY;
+
+  sections.forEach(section => {
+    const id = section.id;   //Id of each section
+    const top =  section.offsetTop - 50;  //  Distance from the top edge
+    const height = section.offsetHeight;  //  Eleement height 
+    const link = document.querySelector(".nav-menu a [href*=" + id +"]")  //id nav link
+
+    if(!link) return;
+
+    link.classList.toggle("active-link", scrollY > topc)
+  })
+}
+
+window.addEventListener("scroll", scrollActive);
